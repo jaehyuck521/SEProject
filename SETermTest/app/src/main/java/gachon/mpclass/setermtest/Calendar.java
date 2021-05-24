@@ -58,84 +58,97 @@ public class Calendar extends AppCompatActivity {
 
         String groupName = dt.getOrgan();
         String str;
-
-        if(sqm.getSchedule(groupName) != null) {
+        schedule = new String[168];
+        Log.i("db1", String.valueOf(dt.getOrgan().length()));
+        if (dt.getOrgan().length()>1)  {
             str = sqm.getSchedule(groupName);
             schedule = str.split(",");
-            Log.i("db1", "schedule 0:" + schedule[0]);
-            Log.i("db1", "schedule 5:" + schedule[5]);
-
-            String[] sunid = new String[24];
-            String[] monid = new String[24];
-            String[] tueid = new String[24];
-            String[] wenid = new String[24];
-            String[] thuid = new String[24];
-            String[] friid = new String[24];
-            String[] satid = new String[24];
-
-            int id[] = new int[168];
-            String[] day = {"sun", "mon", "tue", "wen", "thu", "fri", "sat"};
-
-            //        id[0] = getResources().getIdentifier(sun[i], type, pack);
-            int k = 6;
-            for (int i = 0; i < 24; i++) {
-                if (k == 25) {
-                    k = 1;
-                }
-                sunid[i] = day[0] + String.valueOf(k);
-                monid[i] = day[1] + String.valueOf(k);
-                tueid[i] = day[2] + String.valueOf(k);
-                wenid[i] = day[3] + String.valueOf(k);
-                thuid[i] = day[4] + String.valueOf(k);
-                friid[i] = day[5] + String.valueOf(k);
-                satid[i] = day[6] + String.valueOf(k);
-                k++;
-            }
-
-            Log.i("db1", "" + sunid[1]);
-
-            String type = "id";
-            String pack = getPackageName();
-
-            int j = 0;
-            for (int i = 0; i < 24; i++) {
-                id[j] = getResources().getIdentifier(sunid[i], type, pack);
-                j++;
-                id[j] = getResources().getIdentifier(monid[i], type, pack);
-                j++;
-                id[j] = getResources().getIdentifier(tueid[i], type, pack);
-                j++;
-                id[j] = getResources().getIdentifier(wenid[i], type, pack);
-                j++;
-                id[j] = getResources().getIdentifier(thuid[i], type, pack);
-                j++;
-                id[j] = getResources().getIdentifier(friid[i], type, pack);
-                j++;
-                id[j] = getResources().getIdentifier(satid[i], type, pack);
-                j++;
-            }
-
-            Log.i("db1", "id 167 - " + id[167]);
-            Log.i("db1", "dt getname - " + dt.getName());
-            Log.i("db1", "schedule[2] - " + schedule[2]);
-
-            int cnt = 0; // for caculate pay
-
-            String name = dt.getName() + " ";
-            for (int i = 0; i < 168; i++) {
-                if (name.equals(schedule[i])) {
-                    TextView textview = (TextView) findViewById(id[i]);
-                    textview.setText(dt.getOrgan());
-                    textview.setBackgroundColor(getResources().getColor(R.color.table));
-                    cnt += 1;
-                }
-            }
-
-            // Caculate pay and set
-            long pay = dt.salary * cnt;
-            textPay = findViewById(R.id.textPay);
-            textPay.setText(String.valueOf(pay));
         }
+        else
+        {
+            for(int i=0; i<167; i++) {
+                schedule[i] = " ,";
+                if(i==167)
+                {
+                    schedule[i] = " ";
+                }
+            }
+        }
+
+        Log.i("db1", "schedule 0:" + schedule[0]);
+        Log.i("db1", "schedule 5:" + schedule[5]);
+
+        String[] sunid = new String[24];
+        String[] monid = new String[24];
+        String[] tueid = new String[24];
+        String[] wenid = new String[24];
+        String[] thuid = new String[24];
+        String[] friid = new String[24];
+        String[] satid = new String[24];
+
+        int id[] = new int[168];
+        String[] day = {"sun", "mon", "tue", "wen", "thu", "fri", "sat"};
+
+        //        id[0] = getResources().getIdentifier(sun[i], type, pack);
+        int k = 6;
+        for (int i = 0; i < 24; i++) {
+            if (k == 25) {
+                k = 1;
+            }
+            sunid[i] = day[0] + String.valueOf(k);
+            monid[i] = day[1] + String.valueOf(k);
+            tueid[i] = day[2] + String.valueOf(k);
+            wenid[i] = day[3] + String.valueOf(k);
+            thuid[i] = day[4] + String.valueOf(k);
+            friid[i] = day[5] + String.valueOf(k);
+            satid[i] = day[6] + String.valueOf(k);
+            k++;
+        }
+
+        Log.i("db1", "" + sunid[1]);
+
+        String type = "id";
+        String pack = getPackageName();
+
+        int j = 0;
+        for (int i = 0; i < 24; i++) {
+            id[j] = getResources().getIdentifier(sunid[i], type, pack);
+            j++;
+            id[j] = getResources().getIdentifier(monid[i], type, pack);
+            j++;
+            id[j] = getResources().getIdentifier(tueid[i], type, pack);
+            j++;
+            id[j] = getResources().getIdentifier(wenid[i], type, pack);
+            j++;
+            id[j] = getResources().getIdentifier(thuid[i], type, pack);
+            j++;
+            id[j] = getResources().getIdentifier(friid[i], type, pack);
+            j++;
+            id[j] = getResources().getIdentifier(satid[i], type, pack);
+            j++;
+        }
+
+        Log.i("db1", "id 167 - " + id[167]);
+        Log.i("db1", "dt getname - " + dt.getName());
+        Log.i("db1", "schedule[2] - " + schedule[2]);
+
+        int cnt = 0; // for caculate pay
+
+        String name = dt.getName() + " ";
+        for (int i = 0; i < 168; i++) {
+            if (name.equals(schedule[i])) {
+                TextView textview = (TextView) findViewById(id[i]);
+                textview.setText(dt.getOrgan());
+                textview.setBackgroundColor(getResources().getColor(R.color.table));
+                cnt += 1;
+            }
+        }
+
+        // Caculate pay and set
+        long pay = dt.salary * cnt;
+        textPay = findViewById(R.id.textPay);
+        textPay.setText(String.valueOf(pay));
+
 
         // bottom bar
         fragmentManager = getSupportFragmentManager();
