@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="gachon.mpclass.setermtest">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <queries>
+        <package android:name="com.kakao.talk" />
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SETermTest">
+        <activity android:name=".InviteMembers"></activity>
+        <activity android:name=".CreatedCalendar" />
+        <activity android:name=".CreatedSchedule" />
+        <activity android:name=".Schedule_member" />
+        <activity android:name=".CreateWorkSchedule"/>
+        <activity android:name=".Notice_member" />
+        <activity android:name=".Notice" />
+        <activity android:name=".GroupManagement" />
+        <activity android:name=".GroupPage" />
+        <activity android:name=".CreateGroup" />
+        <activity android:name=".Group" />
+        <activity android:name=".MyPage" />
+        <activity android:name=".Setting" />
+        <activity android:name=".Calendar" />
+        <activity android:name=".UserInfo" />
+        <activity android:name=".SignUp" />
+        <activity android:name=".LogIn" />
+        <activity android:name=".Main">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="com.kakao.sdk.AppKey"
+                android:value="@string/kakao_app_key" />
+        </activity>
+        <activity
+            android:name=".DeleteAccountPopup"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".DisbandGroupPopup"
+            android:theme="@android:style/Theme.Dialog" />
+    </application>
+
+</manifest>
