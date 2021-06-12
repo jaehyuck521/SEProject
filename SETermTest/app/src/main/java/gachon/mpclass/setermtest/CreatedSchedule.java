@@ -36,6 +36,7 @@ public class CreatedSchedule extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_created_schedule);
 
+        /* Receive Data */
         preferences = getSharedPreferences("id", MODE_PRIVATE);
         preferencesList = getSharedPreferences("list", MODE_PRIVATE);
 
@@ -82,8 +83,10 @@ public class CreatedSchedule extends AppCompatActivity {
         transaction.replace(R.id.frameLayout, bottomBar).commitAllowingStateLoss();
     }
 
+    //schedule algorithm
     public String except_and_push() {
 
+        /* Receive Data */
         sqm = new SqliteManager(getApplicationContext(), "kang.db");
         ArrayList<Datadto> list = new ArrayList<Datadto>();
         preferences = getSharedPreferences("id", MODE_PRIVATE);
@@ -101,7 +104,6 @@ public class CreatedSchedule extends AppCompatActivity {
         int rest3[] = new int[list.size()];
 
         for (int i = 0; i < list.size(); i++) {
-            //어레이에 집어넣어서 표현 가능 밑에가 이미지뷰라 일단, 보류
             name[i] = list.get(i).name;
             prefer[i] = (int) list.get(i).prefer;
             rest1[i] = (int) list.get(i).rest1;
@@ -110,10 +112,9 @@ public class CreatedSchedule extends AppCompatActivity {
             Log.i("db1", "" + name[i]);
         }
 
-        //그룹 데이터 받아서 어레이로 만들기
+//Get group data and make it an array
 
         int rest[][] = new int[7][list.size()];
-        //멤버 데이터가 순서대로 들어가나  (0:김, 1:이, 2:박,,,)
         int hours = (part1_to_hour - part1_from_hour) + (part2_to_hour - part2_from_hour) + (part3_to_hour - part3_from_hour); // 하루 총 몇시간 근무인지
         Log.i("db1", "hours : " + hours);
 
@@ -125,8 +126,9 @@ public class CreatedSchedule extends AppCompatActivity {
         Log.i("db1", "time_split : " + time_split[0]);
 
 
-        //rest 배열 업데이트 (가로 = 요일, 세로 = 그룹원) --> 1 = 쉬는날, 디폴트값 0 = 근무가능한 날
-        for (int i = 0; i < list.size(); i++) {
+//rest array update (horizontal = day, vertical = group member)
+// --> 1 = day off, default value 0 = workable day
+         for (int i = 0; i < list.size(); i++) {
             switch (rest1[i]) {
                 case 7:
                     break;
@@ -205,7 +207,7 @@ public class CreatedSchedule extends AppCompatActivity {
 
         }
 
-        //각 요일별로 근무 가능한 사람 리스트 만들기
+//Create a list of available people for each day of the week
         ArrayList<String> sun = new ArrayList<>();
         ArrayList<String> mon = new ArrayList<>();
         ArrayList<String> tue = new ArrayList<>();
@@ -238,7 +240,7 @@ public class CreatedSchedule extends AppCompatActivity {
             }
         }
 
-        //세명 뽑기
+//Pick 3 people
         sun = (ArrayList<String>) getRandomElement(sun);
         mon = (ArrayList<String>) getRandomElement(mon);
         tue = (ArrayList<String>) getRandomElement(tue);
@@ -250,7 +252,7 @@ public class CreatedSchedule extends AppCompatActivity {
         Log.i("db1", "" + mon);
         Log.i("db1", "" + tue);
 
-        //어레이리스트 배열로 바꿈 (요일 별 근무자 3명)
+//Replace Arraylist into array (3 workers per day)
         String[] sunPeople = sun.toArray(new String[sun.size()]);
         String[] monPeople = mon.toArray(new String[mon.size()]);
         String[] tuePeople = tue.toArray(new String[tue.size()]);
@@ -259,7 +261,7 @@ public class CreatedSchedule extends AppCompatActivity {
         String[] friPeople = fri.toArray(new String[fri.size()]);
         String[] satPeople = sat.toArray(new String[sat.size()]);
 
-        //근무자 별 선호시간 0,1,2
+//prefer time - worker 0,1,2
         int[] sunPeoplePrefer = new int[3];
         int[] monPeoplePrefer = new int[3];
         int[] tuePeoplePrefer = new int[3];
@@ -297,9 +299,9 @@ public class CreatedSchedule extends AppCompatActivity {
             }
         }
 
-        //prefer타임에 따라 파트 바꾸기 (전부 고려하지는 않고 우선순위를 두고 바꿈)
-        String temp = "";
-        //일요일
+//replace parts according to prefertime (prioritize without considering all)
+String temp = "";
+        //Sunday
         switch (sunPeoplePrefer[0]) {
             case 0:
                 if (sunPeoplePrefer[1] == 2) {
@@ -338,7 +340,7 @@ public class CreatedSchedule extends AppCompatActivity {
         Log.i("db1", "prefer : " + sunPeoplePrefer[1]);
 
         temp = "";
-        //월요일
+        //Monday
         switch (monPeoplePrefer[0]) {
             case 0:
                 if (monPeoplePrefer[1] == 2) {
@@ -375,7 +377,7 @@ public class CreatedSchedule extends AppCompatActivity {
                 break;
         }
         temp = "";
-        //화요일
+        //Tuesday
         switch (tuePeoplePrefer[0]) {
             case 0:
                 if (tuePeoplePrefer[1] == 2) {
@@ -412,7 +414,7 @@ public class CreatedSchedule extends AppCompatActivity {
                 break;
         }
         temp = "";
-        //수요일
+        //Wednesday
         switch (wenPeoplePrefer[0]) {
             case 0:
                 if (wenPeoplePrefer[1] == 2) {
@@ -449,7 +451,7 @@ public class CreatedSchedule extends AppCompatActivity {
                 break;
         }
         temp = "";
-        //목요일
+        //Thursday
         switch (thuPeoplePrefer[0]) {
             case 0:
                 if (thuPeoplePrefer[1] == 2) {
@@ -486,7 +488,7 @@ public class CreatedSchedule extends AppCompatActivity {
                 break;
         }
         temp = "";
-        //금요일
+        //Friday
         switch (friPeoplePrefer[0]) {
             case 0:
                 if (friPeoplePrefer[1] == 2) {
@@ -523,7 +525,7 @@ public class CreatedSchedule extends AppCompatActivity {
                 break;
         }
         temp = "";
-        //토요일
+        //Saturday
         switch (satPeoplePrefer[0]) {
             case 0:
                 if (satPeoplePrefer[1] == 2) {
@@ -561,7 +563,7 @@ public class CreatedSchedule extends AppCompatActivity {
         }
 
 
-        //요일별로 표시할 텍스트뷰 id 저장
+//Save text view id to display by day
         String[] sunId = new String[hours];
         String[] monId = new String[hours];
         String[] tueId = new String[hours];
@@ -770,7 +772,7 @@ public class CreatedSchedule extends AppCompatActivity {
 
     }
 
-    //랜덤으로 근무자 세명 리스트 뽑기
+    //Three workers at random - Pull from List
     public ArrayList<String> getRandomElement(ArrayList<String> list) {
         Random rand = new Random();
         // create a temporary list for storing
