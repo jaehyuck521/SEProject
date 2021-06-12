@@ -23,10 +23,10 @@ public class UserInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
 
-        // id값으로 객체 구별
+       //call the manager class for using sqlite
         SqliteManager sqm = new SqliteManager(getApplicationContext(), "kang.db");
         preferences = getSharedPreferences("id", MODE_PRIVATE);
-        cur= sqm.getCurrentUser(preferences.getString("id", "null"));
+        cur= sqm.getCurrentUser(preferences.getString("id", "null")); //get the current user info
         id = cur.getId();
 
         wname=(EditText)findViewById(R.id.edit_user_name);

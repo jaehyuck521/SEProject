@@ -1,10 +1,8 @@
 package gachon.mpclass.setermtest;
 
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -37,20 +35,22 @@ public class Notice extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         SqliteManager sqm = new SqliteManager(getApplicationContext(), "kang.db");
 
-        // id값으로 객체 구별
+
         preferences = getSharedPreferences("id", MODE_PRIVATE);
 
         // get part time info
         preferences2 = getSharedPreferences("noticeInfo", MODE_PRIVATE);
 
-        database.getReference().child("idlist").addValueEventListener(new ValueEventListener() {//서버에서 계속 데이터를 읽어들인다.
-            //서버에서 읽어와서 로컬 저장소에 저장.
+        database.getReference().child("idlist").addValueEventListener(new ValueEventListener() {
+            //Getting read from server and save the information to sqlite database
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                sqm.delete();
+                //if server database changes, listener gets data from server
+                sqm.delete();//initialize sqlite database
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Datadto dt = dataSnapshot.getValue(Datadto.class);
                     sqm.insert(dt);
+                    //insert data from server to sqlite , synchronization.
                 }
             }
             @Override

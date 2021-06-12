@@ -2,15 +2,14 @@ package gachon.mpclass.setermtest;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,28 +45,30 @@ public class CreatedSchedule extends AppCompatActivity {
         part2_to_hour = preferencesList.getInt("part2_to_hour", 7);
         part3_from_hour = preferencesList.getInt("part3_from_hour", 9);
         part3_to_hour = preferencesList.getInt("part3_to_hour", 11);
-
+        //Call the sqlite manager for use of sqlite
         sqm = new SqliteManager(getApplicationContext(), "kang.db");
         Datadto dt = new Datadto();
         Gdatadto gdt = new Gdatadto();
         dt = sqm.getCurrentUser(preferences.getString("id", "null"));
+        //get the current user information
 
         String list = except_and_push();
 
-        Datadao da = new Datadao();
-        da.insertSchedule(dt.organ, list);
+        Datadao da = new Datadao(); //for server access
+        da.insertSchedule(dt.organ, list); //insert schedule string to server database
         Toast.makeText(getApplicationContext(), "The work schedule has been created.", Toast.LENGTH_LONG).show();
 
         database = FirebaseDatabase.getInstance();
-        database.getReference().child("Groupschedule").addValueEventListener(new ValueEventListener() {//서버에서 계속 데이터를 읽어들인다.
-            //서버에서 읽어와서 로컬 저장소에 저장.
+        //Getting read from server and save the information to sqlite database
+        database.getReference().child("Groupschedule").addValueEventListener(new ValueEventListener() {
             @Override
+            //if server database changes, listener gets data from server
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 SqliteManager sqm = new SqliteManager(getApplicationContext(), "kang.db");
-                sqm.deleteGroup();
+                sqm.deleteGroup();//initialize sqlite database
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Gdatadto dt = dataSnapshot.getValue(Gdatadto.class);
-                    sqm.insertGroup(dt);
+                    sqm.insertGroup(dt);//insert data from server to sqlite , synchronization.
                 }
             }
 

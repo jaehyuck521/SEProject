@@ -2,7 +2,6 @@ package gachon.mpclass.setermtest;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -27,14 +26,16 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         SqliteManager sqm = new SqliteManager(this, "kang.db");
         database = FirebaseDatabase.getInstance();
-        database.getReference().child("idlist").addValueEventListener(new ValueEventListener() {//서버에서 계속 데이터를 읽어들인다.
-            //서버에서 읽어와서 로컬 저장소에 저장.
+        database.getReference().child("idlist").addValueEventListener(new ValueEventListener() {
+            //Getting read from server and save the information to sqlite database
             @Override
+            //if server database changes, listener gets data from server
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                sqm.delete();
+                sqm.delete();//initialize sqlite database
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Datadto dt = dataSnapshot.getValue(Datadto.class);
                     sqm.insert(dt);
+                    //insert data from server to sqlite , synchronization.
                 }
             }
 
@@ -44,13 +45,15 @@ public class Main extends AppCompatActivity {
         });
         database = FirebaseDatabase.getInstance();
         database.getReference().child("Groupschedule").addValueEventListener(new ValueEventListener() {//서버에서 계속 데이터를 읽어들인다.
-            //서버에서 읽어와서 로컬 저장소에 저장.
+            //Getting read from server and save the information to sqlite database
             @Override
+            //if server database changes, listener gets data from server
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                sqm.deleteGroup();
+                sqm.deleteGroup();//initialize sqlite database
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Gdatadto dt = dataSnapshot.getValue(Gdatadto.class);
                     sqm.insertGroup(dt);
+                    //insert data from server to sqlite , synchronization.
                 }
             }
             @Override

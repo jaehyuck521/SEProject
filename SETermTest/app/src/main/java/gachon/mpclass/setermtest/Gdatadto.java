@@ -1,12 +1,14 @@
 package gachon.mpclass.setermtest;
-
+//object class for access server grouplist database
 public class Gdatadto {
     public String group_id;
     public String schedule;
+    //constructor
     Gdatadto()
     {
 
     }
+    //setter & getter method
     public String getGroup_id() {
         return group_id;
     }

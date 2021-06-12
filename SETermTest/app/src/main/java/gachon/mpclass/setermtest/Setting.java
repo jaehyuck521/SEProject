@@ -1,6 +1,5 @@
 package gachon.mpclass.setermtest;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,14 +8,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -211,15 +207,17 @@ public class Setting extends AppCompatActivity implements TimePicker.OnTimeChang
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // database에 save
+                //save the prefer time and rest day to server
+                //call the sqlite manager for use of sqlite
                 SqliteManager sqm=new SqliteManager(getApplicationContext(),"kang.db");
                 preferences = getSharedPreferences("id", MODE_PRIVATE);
                 Datadto cur = new Datadto();
                 cur=sqm.getCurrentUser(preferences.getString("id", "null"));
-                // database에 save
+                // get the current user information
                 Datadao doli=new Datadao();
                 Log.i("db1",cur.getId()+rest[0]+rest[1]+rest[2]);
                 doli.updateSchedule(getApplicationContext(),cur.getId(),rest[0],rest[1],rest[2],pref);
+                //set the each user's prefer time and rest days.
 
                 Toast.makeText(getApplicationContext(), "Has been saved", Toast.LENGTH_LONG).show();
             }

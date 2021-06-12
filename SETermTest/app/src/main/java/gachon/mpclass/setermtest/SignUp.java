@@ -28,16 +28,16 @@ public class SignUp extends AppCompatActivity {
         btn_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String crid=cid.getText().toString();
-                String crpw=cpw.getText().toString();
-                String ph=cphone.getText().toString();
+                String crid=cid.getText().toString(); //get thd id text
+                String crpw=cpw.getText().toString(); //get the password check
+                String ph=cphone.getText().toString();//get the phone check
                 Datadao doli=new Datadao();
                 Datadto dt=new Datadto(crid, crpw,"",0,0,"",0,ph,"","","",0,"",7,7,7,3);
-                if(doli.enroll(getApplicationContext(),dt)) {
+                if(doli.enroll(getApplicationContext(),dt)) { //enroll the user to server if success, go to next layout
                     Intent intent = new Intent(getApplicationContext(), Main.class);
                     startActivity(intent);
                 }
-                else {
+                else { //if the id already exists,
                     Toast.makeText(getApplicationContext(),"ID already exists\n",Toast.LENGTH_LONG).show();                }
             }
         });

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -30,16 +29,18 @@ public class MyPage extends AppCompatActivity {
         preferences = getSharedPreferences("id", MODE_PRIVATE);
         setid=(TextView) findViewById(R.id.text_user_name);
         setphone=(TextView) findViewById(R.id.text_phone);
+        //call the sqlite manager for use of sqlite
         SqliteManager sqm=new SqliteManager(getApplicationContext(),"kang.db");
-        Datadto dt=new Datadto();
-        dt=sqm.getCurrentUser(preferences.getString("id", "null")); //id값 넣어줘서 하면 된다
-        setid.setText(dt.name);
+        Datadto dt=new Datadto(); //set the dto inserting information
+        dt=sqm.getCurrentUser(preferences.getString("id", "null"));
+        //get the current user information
+        setid.setText(dt.name); //set the ui from current user information
         setphone.setText(dt.phonenum);
         btn_log_out = findViewById(R.id.btn_create_group);
         btn_log_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Main.class);//처음화면으로 돌아간다
+                Intent intent = new Intent(getApplicationContext(), Main.class);//go back to first scene
                 startActivity(intent);
             }
         });

@@ -32,14 +32,14 @@ public class Calendar extends AppCompatActivity {
         setContentView(R.layout.activity_calendar);
         sqm = new SqliteManager(getApplicationContext(), "kang.db");
         database = FirebaseDatabase.getInstance();
-        database.getReference().child("Groupschedule").addValueEventListener(new ValueEventListener() {//서버에서 계속 데이터를 읽어들인다.
-            //서버에서 읽어와서 로컬 저장소에 저장.
-            @Override
+        //Getting read from server and save the information to sqlite database
+        database.getReference().child("Groupschedule").addValueEventListener(new ValueEventListener() {
+            @Override //if server database changes, listener gets data from server
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                sqm.deleteGroup();
+                sqm.deleteGroup();//initialize sqlite database
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Gdatadto dt = dataSnapshot.getValue(Gdatadto.class);
-                    sqm.insertGroup(dt);
+                    sqm.insertGroup(dt);//insert data from server to sqlite , synchronization.
                 }
             }
 

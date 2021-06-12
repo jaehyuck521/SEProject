@@ -8,18 +8,11 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class GroupPage extends AppCompatActivity {
 
@@ -66,13 +59,15 @@ public class GroupPage extends AppCompatActivity {
         text_name4 = findViewById(R.id.text_name4);
         text_id4 = findViewById(R.id.text_id4);
         text_phone4 = findViewById(R.id.text_phone4);
-
+        //call the sqlite manager for use of sqlite
         SqliteManager sqm = new SqliteManager(getApplicationContext(), "kang.db");
         ArrayList<Datadto> list=new ArrayList<Datadto>();
         preferences=getSharedPreferences("id",MODE_PRIVATE);
-        Datadto dt=new Datadto(); //id값 으로 항목 가져온다.
+        Datadto dt=new Datadto();
         dt=sqm.getCurrentUser(preferences.getString("id","null"));
-        list=sqm.getList(dt.organ);
+        //get the current user information
+        //get the organization name
+        list=sqm.getList(dt.organ); //get the group member list from sqlite
         Log.i("db1",dt.organ);
 
         //set group name

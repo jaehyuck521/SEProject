@@ -18,7 +18,7 @@ public class DeleteAccountPopup extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // id값으로 객체 구별
+        //Call the sqlite manager for use of sqlite
         SqliteManager sqm = new SqliteManager(this, "kang.db");
 
         //타이틀바 없애기

@@ -28,21 +28,17 @@ public class DisbandGroupPopup extends Activity {
         //타이틀바 없애기
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_disband_group_popup);
+        //Call the sqlite manager for use of sqlite
         SqliteManager sqm = new SqliteManager(this, "kang.db");
-
-        // id값으로 객체 구별
-
-
-
         database = FirebaseDatabase.getInstance();
-        database.getReference().child("idlist").addValueEventListener(new ValueEventListener() {//서버에서 계속 데이터를 읽어들인다.
-            //서버에서 읽어와서 로컬 저장소에 저장.
+        database.getReference().child("idlist").addValueEventListener(new ValueEventListener() {
+            //Getting read from server and save the information to sqlite database
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                sqm.delete();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {//if server database changes, listener gets data from server
+                sqm.delete();//initialize sqlite database
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Datadto dt = dataSnapshot.getValue(Datadto.class);
-                    sqm.insert(dt);
+                    sqm.insert(dt); //insert data from server to sqlite , synchronization.
                 }
             }
 
@@ -59,7 +55,10 @@ public class DisbandGroupPopup extends Activity {
                 preferences = getSharedPreferences("id", MODE_PRIVATE);
                 Datadto dt=new Datadto();
                 dt=sqm.getCurrentUser(preferences.getString("id", "null"));
-                doli.disbandGroup(getApplicationContext(),dt.organ); //group명 읽어와야 한다.
+                //get the current user information and disband group method execute
+                //for using organization name
+                //the group disband
+                doli.disbandGroup(getApplicationContext(),dt.organ);
             }
         });
         btn_no = findViewById(R.id.btn_no);

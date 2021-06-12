@@ -30,16 +30,18 @@ public class LogIn extends AppCompatActivity {
         btn_log_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // get the id and password from edit text
                 String chid=pid.getText().toString();
                 String chpw=ppw.getText().toString();
                 Datadao doli=new Datadao();
+                //check the id and password if it is valid
                 if(doli.login(getApplicationContext(),chid, chpw)) {
                     editor.putString("id", chid);
                     editor.commit();
                     Intent intent = new Intent(getApplicationContext(), UserInfo.class);
-                    startActivity(intent);
+                    startActivity(intent); //go to next page
                 }
-                else
+                else //login fail
                 {
                     Toast.makeText(getApplicationContext(),"Invalid",Toast.LENGTH_LONG).show();                }
             }

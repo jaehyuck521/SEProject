@@ -37,22 +37,22 @@ public class CreateGroup extends AppCompatActivity {
         hc=(EditText)findViewById(R.id.edit_headcount);
         discript=(EditText)findViewById(R.id.edit_description);
         btn_create_group = findViewById(R.id.btn_create_group);
+        //Call the sqlite manager for use of sqlite
         SqliteManager sqm = new SqliteManager(this, "kang.db");
-
-        // id값으로 객체 구별
         preferences = getSharedPreferences("id", MODE_PRIVATE);
         Datadto dt=new Datadto();
         dt=sqm.getCurrentUser(preferences.getString("id", "null"));
-
+        //get the current user information
         database = FirebaseDatabase.getInstance();
-        database.getReference().child("idlist").addValueEventListener(new ValueEventListener() {//서버에서 계속 데이터를 읽어들인다.
-            //서버에서 읽어와서 로컬 저장소에 저장.
+        //Getting read from server and save the information to sqlite database
+        database.getReference().child("idlist").addValueEventListener(new ValueEventListener() {
+            //if server database changes, listener gets data from server
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                sqm.delete();
+                sqm.delete();//initialize sqlite database
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Datadto dt = dataSnapshot.getValue(Datadto.class);
-                    sqm.insert(dt);
+                    sqm.insert(dt);//insert data from server to sqlite , synchronization.
                 }
             }
             @Override

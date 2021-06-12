@@ -31,14 +31,14 @@ public class Schedule_member extends AppCompatActivity {
         setContentView(R.layout.activity_schedule_member);
         sqm = new SqliteManager(getApplicationContext(), "kang.db");
         database = FirebaseDatabase.getInstance();
-        database.getReference().child("Groupschedule").addValueEventListener(new ValueEventListener() {//서버에서 계속 데이터를 읽어들인다.
-            //서버에서 읽어와서 로컬 저장소에 저장.
+        database.getReference().child("Groupschedule").addValueEventListener(new ValueEventListener() {
+            //Getting read from server and save the information to sqlite database
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                sqm.deleteGroup();
+            public void onDataChange(@NonNull DataSnapshot snapshot) { //if server database changes, listener gets data from server
+                sqm.deleteGroup(); //initialize sqlite database
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Gdatadto dt = dataSnapshot.getValue(Gdatadto.class);
-                    sqm.insertGroup(dt);
+                    sqm.insertGroup(dt); //insert data from server to sqlite , synchronization.
                 }
             }
 

@@ -1,9 +1,8 @@
 package gachon.mpclass.setermtest;
 
-import java.util.HashMap;
-import java.util.Map;
-
+//data dto object  for accessing server database
 public class Datadto {
+    //variables
     public String id;
     public String password;
     public String name;
@@ -21,6 +20,7 @@ public class Datadto {
     public long rest2;
     public long rest3;
     public long prefer;
+    //data dto constructor
 
     public Datadto(String id, String password,String name, long lead, long isStu,  String org, long orgnum, String phone,String gleader,String dis, String info, long salary, String notice,long rest1, long rest2, long rest3, long prefer)
     {
@@ -45,6 +45,7 @@ public class Datadto {
     public Datadto()
     {
     }
+    //setter & getter method
     public String getId()
     {
         return id;

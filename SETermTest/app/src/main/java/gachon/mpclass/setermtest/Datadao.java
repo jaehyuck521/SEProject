@@ -3,56 +3,49 @@ package gachon.mpclass.setermtest;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-public class Datadao { //서버의 데이터에 접근하기 위한 클래스
-    FirebaseDatabase database;
+//class for access the firebase idlist database
+public class Datadao {
+    FirebaseDatabase database; //firebase variable
 
     public void DataDao() {
     }
 
-    public boolean enroll(Context context, Datadto dto) //회원 가입
+    public boolean enroll(Context context, Datadto dto) //Enroll the user
     {
         SqliteManager sqm = new SqliteManager(context, "kang.db");
-        boolean check = sqm.checkId(dto.getId()); //현재 데이터에 있는 것과 같은 지 비교해준다. id중복 체크
+        boolean check = sqm.checkId(dto.getId()); //check the redundant id from sqlite
         if (check == false) {
             database = FirebaseDatabase.getInstance();
-            database.getReference().child("idlist").child(dto.id).setValue(dto); //ID가 없으면 가입성공
+            database.getReference().child("idlist").child(dto.id).setValue(dto); //if it is not redundant
+            //enroll the user database to server
             return true;
         } else {
-            return false; //ID가 있으면, 가입실패.
+            return false; //If id exists, enroll fail
         }
     }
-
-    public boolean login(Context context, String id, String password) //로그인
+    //login method
+    public boolean login(Context context, String id, String password)
     {
         SqliteManager sqm = new SqliteManager(context, "kang.db");
-        boolean idcheck = sqm.checkId(id);
+        boolean idcheck = sqm.checkId(id); //check the id if it exists
         if (idcheck == true) {
-            boolean pwcheck = sqm.checkPassword(id, password);
+            boolean pwcheck = sqm.checkPassword(id, password); //and password check
             if (pwcheck == true) {
-                Log.i("db1", "login success");
+                Log.i("db1", "login success"); //all the process check complete, go to login
                 return true;
             } else {
-                Log.i("db1", "password invalid");
+                Log.i("db1", "password invalid"); //if the password invalid
                 return false;
             }
         } else {
-            Log.i("db1", " " + "id invalid");
+            Log.i("db1", " " + "id invalid"); //if the id invalid
             return false;
         }
     }
-
-    // update prefertime, and rest day. 직원들이 선호하는 시간과 휴식시간을 계속 업데이트해줄 수 있게하는 함수
+    // update prefertime, and rest day.
     public boolean updateSchedule(Context context, String id, long rest1, long rest2, long rest3, long prefer) {
         database = FirebaseDatabase.getInstance();
         SqliteManager sqm = new SqliteManager(context, "kang.db");
@@ -66,8 +59,8 @@ public class Datadao { //서버의 데이터에 접근하기 위한 클래스
             return false;
         }
     }
-
-    public boolean updateWage(Context context, String id, long wage) //wage 바꿔주기.
+    //group leader update wage, change the database wage
+    public boolean updateWage(Context context, String id, long wage) //change wage
     {
         database = FirebaseDatabase.getInstance();
         SqliteManager sqm = new SqliteManager(context, "kang.db");
@@ -79,11 +72,11 @@ public class Datadao { //서버의 데이터에 접근하기 위한 클래스
         }
     }
 
-    //그룹원을 초대하거나, 그룹을 만들 때, 그룹이름을 ""회원가입 때, 이렇게 저장을 하는데, 그룹명을 세팅해준다.
+    //invite group member press the id and organaziation name
     public boolean setGroup(Context context, String id, String org) {
         database = FirebaseDatabase.getInstance();
         SqliteManager sqm = new SqliteManager(context, "kang.db");
-        if (sqm.checkId(id)) {
+        if (sqm.checkId(id)) { //check the id if it exists
             database.getReference().child("idlist").child(id).child("organ").setValue(org); //update
             return true;
         } else {
@@ -91,7 +84,7 @@ public class Datadao { //서버의 데이터에 접근하기 위한 클래스
         }
     }
 
-    //리더가 그룹을 만들었을 때, 자신의 leader값을 1로 설정. default값은 0
+    //if groupleader makes the group, set the own variable to 1, default is 0
     public boolean setLeader(Context context, String id, String gname, int gnumber, String dis) {
         database = FirebaseDatabase.getInstance();
         SqliteManager sqm = new SqliteManager(context, "kang.db");
@@ -106,8 +99,7 @@ public class Datadao { //서버의 데이터에 접근하기 위한 클래스
             return false;
         }
     }
-
-    //사용자가 학생일 경우, 서버의 데이터베이스의 isStudent를 1로 저장. 직장인 default인 0으로 설정.
+    //If the user is student, save the isStudent 1 to sever database or worker set default: 0
     public boolean setStudent(Context context, String id, String name) {
         database = FirebaseDatabase.getInstance();
         SqliteManager sqm = new SqliteManager(context, "kang.db");
@@ -119,7 +111,7 @@ public class Datadao { //서버의 데이터에 접근하기 위한 클래스
             return false;
         }
     }
-
+//if the user is work set the isStudent variable to 0
     public boolean setWorker(Context context, String id, String name) {
         database = FirebaseDatabase.getInstance();
         SqliteManager sqm = new SqliteManager(context, "kang.db");
@@ -131,7 +123,7 @@ public class Datadao { //서버의 데이터에 접근하기 위한 클래스
         }
     }
 
-    //사용자 삭제
+    //if the user leaves the app, delete the user info
     public boolean deleteUser(Context context, String id) {
         database = FirebaseDatabase.getInstance();
         SqliteManager sqm = new SqliteManager(context, "kang.db");
@@ -143,13 +135,13 @@ public class Datadao { //서버의 데이터에 접근하기 위한 클래스
         }
 
     }
-
+    // group leader can set the notice,salary,working information to group member
     public boolean setNotice(Context context, String organ, String workingfo, int sal, String notice) {
         database = FirebaseDatabase.getInstance();
         SqliteManager sqm = new SqliteManager(context, "kang.db");
-        ArrayList<Datadto> li = new ArrayList<Datadto>();
+        ArrayList<Datadto> li = new ArrayList<Datadto>(); //get the group member
         li = sqm.getList(organ);
-        for (int i = 0; i < li.size(); i++) {
+        for (int i = 0; i < li.size(); i++) { //set  the all group memeber's notice and salary, info
             database.getReference().child("idlist").child(li.get(i).id).child("g_info").setValue(workingfo);
             database.getReference().child("idlist").child(li.get(i).id).child("salary").setValue(sal);
             database.getReference().child("idlist").child(li.get(i).id).child("groupNotice").setValue(notice);
@@ -157,11 +149,12 @@ public class Datadao { //서버의 데이터에 접근하기 위한 클래스
         return true;
     }
 
-    //리더가 그룹원을 초대할 때, getcurrentUser로, 파라미터들을 가져온다.
+    //group leader invites the group member, and insert the group information using getCurrentUser method
     public boolean inviteGroupcomponent(Context context, String id, String iorgan, long iorgannum, String lname, String gdis, String g_info, String gnotice, long salary) {
         database = FirebaseDatabase.getInstance();
         SqliteManager sqm = new SqliteManager(context, "kang.db");
         if (sqm.checkId(id)) {
+            //insert the group information
             database.getReference().child("idlist").child(id).child("organ").setValue(iorgan);
             database.getReference().child("idlist").child(id).child("organnum").setValue(iorgannum);
             database.getReference().child("idlist").child(id).child("groupLeadname").setValue(lname);
@@ -174,13 +167,7 @@ public class Datadao { //서버의 데이터에 접근하기 위한 클래스
             return false;
         }
     }
-
-    //그룹원들 초대하는 코드 예시
-        /*Datadao doli=new Datadao();
-        Datadto dt=new Datadto();
-        dt=sqm.getCurrentUser("zhao");
-        doli.inviteGroupcomponent(getApplicationContext(),"hello",dt.organ,dt.organnum,dt.groupLeadname,dt.discription,dt.g_info,dt.groupNotice,dt.salary);
-        */
+    // method for disband group. Group member can disband, set the group variable to default.
     public boolean disbandGroup(Context context, String organ) {
         database = FirebaseDatabase.getInstance();
         SqliteManager sqm = new SqliteManager(context, "kang.db");
@@ -197,7 +184,8 @@ public class Datadao { //서버의 데이터에 접근하기 위한 클래스
         }
         return true;
     }
-
+    //after the algorithm the group's schedule information sends to server database
+    //for using group name and schedule. it saves the group member's schedule to server.
     public boolean insertSchedule(String group, String sschedule) {
         database = FirebaseDatabase.getInstance();
         database.getReference().child("Groupschedule").child(group).child("group_id").setValue(group);
