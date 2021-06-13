@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,11 +49,11 @@ public class Group extends AppCompatActivity {
         dt = new Datadto();
         dt = sqm.getCurrentUser(preferences.getString("id", "null"));
 
-        // 이미 속한 그룹이 있다면 보이게
+        // if already has group, setting visible
         if(dt.organ!="")
             groupLayout.setVisibility(View.VISIBLE);
 
-        // dt에서 가져온 값들 UI에 표현
+        // express the value from dt
         text_groupname = findViewById(R.id.text_groupname);
         text_leader = findViewById(R.id.text_leader);
         text_headcount = findViewById(R.id.text_headcount);
@@ -62,15 +61,15 @@ public class Group extends AppCompatActivity {
         text_groupname.setText(String.valueOf(dt.organ));
         text_leader.setText(String.valueOf(dt.groupLeadname));
         text_headcount.setText(String.valueOf(dt.organnum));
-
-        database.getReference().child("idlist").addValueEventListener(new ValueEventListener() {//서버에서 계속 데이터를 읽어들인다.
-            //서버에서 읽어와서 로컬 저장소에 저장.
+        //Getting read from server and save the information to sqlite database
+        database.getReference().child("idlist").addValueEventListener(new ValueEventListener() {
             @Override
+            //if server database changes, listener gets data from server
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                sqm.delete();
+                sqm.delete();//initialize sqlite database
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Datadto dt = dataSnapshot.getValue(Datadto.class);
-                    sqm.insert(dt);
+                    sqm.insert(dt);//insert data from server to sqlite , synchronization.
                 }
             }
 
@@ -79,9 +78,7 @@ public class Group extends AppCompatActivity {
             }
         });
         Datadto curuser = new Datadto();
-        //curuser=sqm.getCurrentUser(id); id값을 이용해 자신의 정보를 가져온다
-        //curuser.organ, curuser.groupLeadname, curuser.organnum
-        //그룹의 정보들을 가져온다. (UI에 표시 필요)
+
         btn_create_group = findViewById(R.id.btn_create_group);
         btn_check = findViewById(R.id.btn_check);
         btn_create_group.setOnClickListener(new View.OnClickListener() {

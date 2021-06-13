@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -69,13 +70,24 @@ public class Notice extends AppCompatActivity {
             public void onClick(View v) {
                 Datadto dt = new Datadto();
                 dt = sqm.getCurrentUser(preferences.getString("id", "null"));
-                String info = workinginfo.getText().toString();
-                info = info + preferences2.getString("partInfo", "");
-                String sal = salary.getText().toString();
-                String not = notice.getText().toString();
-                int sala = Integer.parseInt(sal);
-                Datadao doli = new Datadao();
-                doli.setNotice(getApplicationContext(), dt.organ, info, sala, not); //저장. 조직 이름 넣으면, 해당 조직원들 모두, 데이터 업데이트
+                //get the current user information
+                //if the user is leader check
+                if(dt.leader==1) {
+                    String info = workinginfo.getText().toString();
+                    info = info + preferences2.getString("partInfo", "");
+                    String sal = salary.getText().toString();
+                    String not = notice.getText().toString();
+                    //get the text from edittext
+                    int sala = Integer.parseInt(sal);
+                    Datadao doli = new Datadao();
+                    doli.setNotice(getApplicationContext(), dt.organ, info, sala, not);
+                    //save the group setting salary and notice, information
+                }
+                //the user is not leader.
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Invalid leader",Toast.LENGTH_LONG).show();
+                }
             }
         });
 

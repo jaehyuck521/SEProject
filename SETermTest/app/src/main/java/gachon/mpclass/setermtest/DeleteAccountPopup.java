@@ -21,7 +21,7 @@ public class DeleteAccountPopup extends Activity {
         //Call the sqlite manager for use of sqlite
         SqliteManager sqm = new SqliteManager(this, "kang.db");
 
-        //타이틀바 없애기
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_delete_account_popup);
 
