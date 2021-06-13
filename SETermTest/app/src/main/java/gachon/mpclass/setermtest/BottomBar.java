@@ -18,7 +18,7 @@ public class BottomBar extends Fragment {
 
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_bottom_bar, container, false);
 
-        //하단바
+        //bottom bar creation
         ImageView calendar = (ImageView) rootView.findViewById(R.id.calendar);
         calendar.setOnClickListener(new View.OnClickListener() {
             @Override

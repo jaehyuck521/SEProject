@@ -56,10 +56,12 @@ public class Main extends AppCompatActivity {
                     //insert data from server to sqlite , synchronization.
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+        //Go to the SignUp class to create an account
         btn_sign_up = findViewById(R.id.btn_sign_up);
         btn_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +70,7 @@ public class Main extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //Go to login class to log in
         btn_log_in = findViewById(R.id.btn_log_in);
         btn_log_in.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +79,7 @@ public class Main extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //Go to the SignUp class to create an account
         btn_create_account = findViewById(R.id.btn_create_account);
         btn_create_account.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -24,26 +24,26 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
         preferences = getSharedPreferences("id", MODE_PRIVATE);
         editor = preferences.edit();
-        pid=(EditText)findViewById(R.id.edit_id);
-        ppw=(EditText)findViewById(R.id.editPassword);
-        btn_log_in  = findViewById(R.id.btn_log_in);
+        pid = (EditText) findViewById(R.id.edit_id);
+        ppw = (EditText) findViewById(R.id.editPassword);
+        btn_log_in = findViewById(R.id.btn_log_in);
         btn_log_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // get the id and password from edit text
-                String chid=pid.getText().toString();
-                String chpw=ppw.getText().toString();
-                Datadao doli=new Datadao();
+                String chid = pid.getText().toString();
+                String chpw = ppw.getText().toString();
+                Datadao doli = new Datadao();
                 //check the id and password if it is valid
-                if(doli.login(getApplicationContext(),chid, chpw)) {
+                if (doli.login(getApplicationContext(), chid, chpw)) {
                     editor.putString("id", chid);
                     editor.commit();
                     Intent intent = new Intent(getApplicationContext(), UserInfo.class);
                     startActivity(intent); //go to next page
-                }
-                else //login fail
+                } else //login fail
                 {
-                    Toast.makeText(getApplicationContext(),"Invalid",Toast.LENGTH_LONG).show();                }
+                    Toast.makeText(getApplicationContext(), "Invalid", Toast.LENGTH_LONG).show();
+                }
             }
         });
         btn_create_account = findViewById(R.id.btn_create_account);

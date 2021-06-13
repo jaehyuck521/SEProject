@@ -41,6 +41,7 @@ public class CreateWorkSchedule extends AppCompatActivity {
 
     static final String[] LIST_HEADCOUNT = {"1", "2", "3", "4"};
 
+    // The value to put in the spinner to select the time zone.
     static final String[] LIST_HOUR = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
             "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"};
 
@@ -75,7 +76,7 @@ public class CreateWorkSchedule extends AppCompatActivity {
         // part1
         Spinner fromSpinner1 = findViewById(R.id.fromSpinner1);
         Spinner toSpinner1 = findViewById(R.id.toSpinner1);
-
+        // A value is assigned to each adapter.
         adapter_from_1 = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, LIST_HOUR);
         adapter_from_1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -180,12 +181,12 @@ public class CreateWorkSchedule extends AppCompatActivity {
             }
         });
 
-        //스케줄 알고리즘으로 create
+        //By sending the value to the schedule algorithm, the final schedule can be created through the algorithm.
         btn_create = findViewById(R.id.btn_create);
         btn_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // database에 save
+                // Store values ​​through sharedPreferences. This goes to the class that creates the schedule.
                 part_info = "\n\nPart 1   " + part1_from_hour + ":00 - " + part1_to_hour + ":00" +
                         "\nPart 2   " + part2_from_hour + ":00 - " + part2_to_hour + ":00" +
                         "\nPart 3   " + part3_from_hour + ":00 - " + part3_to_hour + ":00";

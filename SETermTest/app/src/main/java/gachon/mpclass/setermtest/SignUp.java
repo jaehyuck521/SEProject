@@ -26,6 +26,9 @@ public class SignUp extends AppCompatActivity {
 
         btn_sign_up = findViewById(R.id.btn_sign_up);
         btn_sign_up.setOnClickListener(new View.OnClickListener() {
+            // When the member sign-up button is pressed,
+            // the DB value is compared with the ID, password,
+            // and mobile phone number entered by the user.
             @Override
             public void onClick(View v) {
                 String crid=cid.getText().toString(); //get thd id text

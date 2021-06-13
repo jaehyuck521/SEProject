@@ -31,6 +31,10 @@ public class Setting extends AppCompatActivity implements TimePicker.OnTimeChang
     long pref=3;
     SharedPreferences preferences;
 
+    // Specifies each holiday,
+    // i.e. stores the value of an object when a value is selected in the spinner.
+    // And the process of saving to DB
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,7 @@ public class Setting extends AppCompatActivity implements TimePicker.OnTimeChang
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // When the user selects a value among the spinners,
                 String holiday1 = LIST_DAY[position];
                 switch(holiday1)
                 {
@@ -76,6 +81,7 @@ public class Setting extends AppCompatActivity implements TimePicker.OnTimeChang
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                //when nothing is selected
                 Toast.makeText(getApplicationContext(), "Null", Toast.LENGTH_LONG).show();
             }
         });
@@ -281,7 +287,7 @@ public class Setting extends AppCompatActivity implements TimePicker.OnTimeChang
 //            }
 //        });
 
-        // 시간 체크하러 이동하기
+        // go to check the time
         Button btn_check_time = findViewById(R.id.btn_check_time);
         btn_check_time.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -299,7 +305,7 @@ public class Setting extends AppCompatActivity implements TimePicker.OnTimeChang
 
     @Override
     public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-        // 시간 설정값이 바뀌었을 때
+        // When the time set value is changed
     }
 
 }

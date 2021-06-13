@@ -24,7 +24,7 @@ public class GroupManagement extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_management);
 
-        // 공지사항 게시판
+        // notice board
         btn_changeNotice = findViewById(R.id.btn_changeNotice);
         btn_changeNotice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,7 +34,7 @@ public class GroupManagement extends AppCompatActivity {
             }
         });
 
-        // 그룹 해체
+        // group disbandment
         btn_disbandGroup = findViewById(R.id.btn_disbandGroup);
         btn_disbandGroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +44,7 @@ public class GroupManagement extends AppCompatActivity {
             }
         });
 
-        // 멤버 초대
+        // member invitation
         btn_inviteMembers = findViewById(R.id.btn_inviteMembers);
         btn_inviteMembers.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +54,7 @@ public class GroupManagement extends AppCompatActivity {
             }
         });
 
-        // 시간표 변경
+        // timetable change
         btn_createWorkSchedule = findViewById(R.id.btn_createWorkSchedule);
         btn_createWorkSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +63,7 @@ public class GroupManagement extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        //bottom bar work
         fragmentManager = getSupportFragmentManager();
         bottomBar = new BottomBar();
         transaction = fragmentManager.beginTransaction();

@@ -32,6 +32,7 @@ public class Schedule_member extends AppCompatActivity {
         sqm = new SqliteManager(getApplicationContext(), "kang.db");
         database = FirebaseDatabase.getInstance();
         database.getReference().child("Groupschedule").addValueEventListener(new ValueEventListener() {
+
             //Getting read from server and save the information to sqlite database
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) { //if server database changes, listener gets data from server
@@ -47,6 +48,7 @@ public class Schedule_member extends AppCompatActivity {
             }
         });
 
+        // Identify each object by id value
         preferences = getSharedPreferences("id", MODE_PRIVATE);
         sqm = new SqliteManager(getApplicationContext(), "kang.db");
         Datadto dt = new Datadto();
@@ -56,7 +58,7 @@ public class Schedule_member extends AppCompatActivity {
         String groupName = dt.getOrgan();
         String str;
 
-        if(sqm.getSchedule(groupName)!=null) {
+        if (sqm.getSchedule(groupName) != null) {
             str = sqm.getSchedule(groupName);
             schedule = str.split(",");
             Log.i("db1", "schedule 0:" + schedule[0]);
@@ -119,6 +121,7 @@ public class Schedule_member extends AppCompatActivity {
             }
         }
 
+        // bottom bar work
         fragmentManager = getSupportFragmentManager();
         bottomBar = new BottomBar();
         transaction = fragmentManager.beginTransaction();

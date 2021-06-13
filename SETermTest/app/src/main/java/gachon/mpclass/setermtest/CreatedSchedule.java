@@ -113,7 +113,7 @@ public class CreatedSchedule extends AppCompatActivity {
             Log.i("db1", "" + name[i]);
         }
 
-//Get group data and make it an array
+        //Get group data and make it an array
 
         int rest[][] = new int[7][list.size()];
         int hours = (part1_to_hour - part1_from_hour) + (part2_to_hour - part2_from_hour) + (part3_to_hour - part3_from_hour); // 하루 총 몇시간 근무인지
@@ -127,9 +127,9 @@ public class CreatedSchedule extends AppCompatActivity {
         Log.i("db1", "time_split : " + time_split[0]);
 
 
-//rest array update (horizontal = day, vertical = group member)
-// --> 1 = day off, default value 0 = workable day
-         for (int i = 0; i < list.size(); i++) {
+        //rest array update (horizontal = day, vertical = group member)
+        // --> 1 = day off, default value 0 = workable day
+        for (int i = 0; i < list.size(); i++) {
             switch (rest1[i]) {
                 case 7:
                     break;
@@ -208,7 +208,7 @@ public class CreatedSchedule extends AppCompatActivity {
 
         }
 
-//Create a list of available people for each day of the week
+        //Create a list of available people for each day of the week
         ArrayList<String> sun = new ArrayList<>();
         ArrayList<String> mon = new ArrayList<>();
         ArrayList<String> tue = new ArrayList<>();
@@ -241,7 +241,7 @@ public class CreatedSchedule extends AppCompatActivity {
             }
         }
 
-//Pick 3 people
+        //Pick 3 people
         sun = (ArrayList<String>) getRandomElement(sun);
         mon = (ArrayList<String>) getRandomElement(mon);
         tue = (ArrayList<String>) getRandomElement(tue);
@@ -253,7 +253,7 @@ public class CreatedSchedule extends AppCompatActivity {
         Log.i("db1", "" + mon);
         Log.i("db1", "" + tue);
 
-//Replace Arraylist into array (3 workers per day)
+        //Replace Arraylist into array (3 workers per day)
         String[] sunPeople = sun.toArray(new String[sun.size()]);
         String[] monPeople = mon.toArray(new String[mon.size()]);
         String[] tuePeople = tue.toArray(new String[tue.size()]);
@@ -262,7 +262,7 @@ public class CreatedSchedule extends AppCompatActivity {
         String[] friPeople = fri.toArray(new String[fri.size()]);
         String[] satPeople = sat.toArray(new String[sat.size()]);
 
-//prefer time - worker 0,1,2
+        //prefer time - worker 0,1,2
         int[] sunPeoplePrefer = new int[3];
         int[] monPeoplePrefer = new int[3];
         int[] tuePeoplePrefer = new int[3];
@@ -300,8 +300,8 @@ public class CreatedSchedule extends AppCompatActivity {
             }
         }
 
-//replace parts according to prefertime (prioritize without considering all)
-String temp = "";
+        //replace parts according to prefertime (prioritize without considering all)
+        String temp = "";
         //Sunday
         switch (sunPeoplePrefer[0]) {
             case 0:
@@ -564,7 +564,7 @@ String temp = "";
         }
 
 
-//Save text view id to display by day
+        //Save text view id to display by day
         String[] sunId = new String[hours];
         String[] monId = new String[hours];
         String[] tueId = new String[hours];
@@ -604,7 +604,6 @@ String temp = "";
             thuId[time_split[0] + time_split[1] + i] = day[4] + String.valueOf(part3_from_hour + i);
             friId[time_split[0] + time_split[1] + i] = day[5] + String.valueOf(part3_from_hour + i);
             satId[time_split[0] + time_split[1] + i] = day[6] + String.valueOf(part3_from_hour + i);
-
         }
 
         String type = "id";
@@ -678,6 +677,7 @@ String temp = "";
             textView6.setText(satPeople[1]);
 
         }
+
         //PART 3
         for (int i = time_split[1] + time_split[0]; i < hours; i++) {
             TextView textView0 = (TextView) findViewById(viewId0[i]);
@@ -712,7 +712,7 @@ String temp = "";
 
         int id[] = new int[168];
 
-//        id[0] = getResources().getIdentifier(sun[i], type, pack);
+        // id[0] = getResources().getIdentifier(sun[i], type, pack);
         int k = 6;
         for (int i = 0; i < 24; i++) {
             if (k == 25) {

@@ -25,7 +25,7 @@ public class DisbandGroupPopup extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //타이틀바 없애기
+        //Remove title bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_disband_group_popup);
         //Call the sqlite manager for use of sqlite
@@ -70,15 +70,15 @@ public class DisbandGroupPopup extends Activity {
         });
     }
 
-    //확인 버튼 클릭
+    //When user click the OK button
     public void mOnClose(View v) {
-        //액티비티(팝업) 닫기
+        //Close activity (popup)
         finish();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        //바깥레이어 클릭시 안닫히게
+        //The operation of not closing when the outer layer is clicked.
         if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
             return false;
         }
@@ -87,7 +87,7 @@ public class DisbandGroupPopup extends Activity {
 
     @Override
     public void onBackPressed() {
-        //안드로이드 백버튼 막기
+        //How to block android back button
         return;
     }
 }

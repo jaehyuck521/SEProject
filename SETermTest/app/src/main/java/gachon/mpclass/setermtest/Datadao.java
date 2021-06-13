@@ -111,7 +111,7 @@ public class Datadao {
             return false;
         }
     }
-//if the user is work set the isStudent variable to 0
+    //if the user is work set the isStudent variable to 0
     public boolean setWorker(Context context, String id, String name) {
         database = FirebaseDatabase.getInstance();
         SqliteManager sqm = new SqliteManager(context, "kang.db");
@@ -135,6 +135,7 @@ public class Datadao {
         }
 
     }
+
     // group leader can set the notice,salary,working information to group member
     public boolean setNotice(Context context, String organ, String workingfo, int sal, String notice) {
         database = FirebaseDatabase.getInstance();
@@ -184,6 +185,7 @@ public class Datadao {
         }
         return true;
     }
+
     //after the algorithm the group's schedule information sends to server database
     //for using group name and schedule. it saves the group member's schedule to server.
     public boolean insertSchedule(String group, String sschedule) {

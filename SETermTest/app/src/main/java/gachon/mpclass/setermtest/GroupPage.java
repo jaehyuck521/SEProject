@@ -79,7 +79,8 @@ public class GroupPage extends AppCompatActivity {
         String [] id=new String[list.size()];
         String [] phone=new String[list.size()];
         for(int i=0;i<list.size();i++) {
-            // 어레이에 집어넣어서 표현 가능 밑에가 이미지뷰라 일단, 보류
+            // It can be expressed by putting it in an array.
+            // The bottom is an image view. For now, hold
             name[i] = list.get(i).name;
             id[i] = list.get(i).id;
             phone[i] = list.get(i).phonenum;
@@ -173,27 +174,27 @@ public class GroupPage extends AppCompatActivity {
             text_phone4.setText(String.valueOf(phone[3]));
         }
 
-//        //값들 UI로 표현
-////        text_name1 = findViewById(R.id.text_name);
-////        text_id1 = findViewById(R.id.text_id);
-////        text_phone1 = findViewById(R.id.text_phone);
-////        Log.i("db1",name[0]);
+//        //Values ​​expressed in UI
+//        text_name1 = findViewById(R.id.text_name);
+//        text_id1 = findViewById(R.id.text_id);
+//        text_phone1 = findViewById(R.id.text_phone);
+//        Log.i("db1",name[0]);
 //
 //        text_name1.setText(name[0]);
 //        text_id1.setText(id[0]);
 //        text_phone1.setText(phone[0]);
-//        //
-////        text_name2 = findViewById(R.id.text_name2);
-////        text_id2 = findViewById(R.id.text_id2);
-////        text_phone2 = findViewById(R.id.text_phone2);
+//
+//        text_name2 = findViewById(R.id.text_name2);
+//        text_id2 = findViewById(R.id.text_id2);
+//        text_phone2 = findViewById(R.id.text_phone2);
 //
 //        text_name2.setText(String.valueOf(name[1]));
 //        text_id2.setText(String.valueOf(id[1]));
 //        text_phone2.setText(String.valueOf(phone[1]));
-//        //
-////        text_name3 = findViewById(R.id.text_name3);
-////        text_id3 = findViewById(R.id.text_id3);
-////        text_phone3 = findViewById(R.id.text_phone3);
+//
+//        text_name3 = findViewById(R.id.text_name3);
+//        text_id3 = findViewById(R.id.text_id3);
+//        text_phone3 = findViewById(R.id.text_phone3);
 //
 //        text_name3.setText(String.valueOf(name[2]));
 //        text_id3.setText(String.valueOf(id[2]));
@@ -219,7 +220,7 @@ public class GroupPage extends AppCompatActivity {
             }
         });
 
-        // 멤버들과 나의 전체 일정 보기
+        // View all members and my schedule
         btn_viewWorkSchedule = findViewById(R.id.btn_viewWorkSchedule);
         btn_viewWorkSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,6 +231,7 @@ public class GroupPage extends AppCompatActivity {
             }
         });
 
+        //bottom bar work
         fragmentManager = getSupportFragmentManager();
         bottomBar = new BottomBar();
         transaction = fragmentManager.beginTransaction();

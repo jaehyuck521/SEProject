@@ -48,7 +48,7 @@ public class Calendar extends AppCompatActivity {
             }
         });
 
-        // id값으로 객체 구별
+        // Identify objects by id value
         preferences = getSharedPreferences("id", MODE_PRIVATE);
 
         sqm = new SqliteManager(getApplicationContext(), "kang.db");
@@ -75,6 +75,7 @@ public class Calendar extends AppCompatActivity {
             }
         }
 
+        // Testing schedule creation
         Log.i("db1", "schedule 0:" + schedule[0]);
         Log.i("db1", "schedule 5:" + schedule[5]);
 
@@ -111,6 +112,8 @@ public class Calendar extends AppCompatActivity {
         String pack = getPackageName();
 
         int j = 0;
+
+        // Get values ​​from layout to create calendar
         for (int i = 0; i < 24; i++) {
             id[j] = getResources().getIdentifier(sunid[i], type, pack);
             j++;

@@ -28,13 +28,14 @@ public class Notice extends AppCompatActivity {
     FirebaseDatabase database;
     SharedPreferences preferences, preferences2;
 
+    // Assign a value to the notice zone
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
         database = FirebaseDatabase.getInstance();
         SqliteManager sqm = new SqliteManager(getApplicationContext(), "kang.db");
-
 
         preferences = getSharedPreferences("id", MODE_PRIVATE);
 
@@ -53,28 +54,32 @@ public class Notice extends AppCompatActivity {
                     //insert data from server to sqlite , synchronization.
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        workinginfo=(EditText)findViewById(R.id.edit_working_info);
-        salary=(EditText)findViewById(R.id.edit_salary_info);
-        notice=(EditText)findViewById(R.id.edit_additional_notice);
-        bts=(ImageButton)findViewById(R.id.imageButton);
+
+        workinginfo = (EditText) findViewById(R.id.edit_working_info);
+        salary = (EditText) findViewById(R.id.edit_salary_info);
+        notice = (EditText) findViewById(R.id.edit_additional_notice);
+        bts = (ImageButton) findViewById(R.id.imageButton);
         bts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Datadto dt=new Datadto();
-                dt=sqm.getCurrentUser(preferences.getString("id", "null"));
-                String info=workinginfo.getText().toString();
+                Datadto dt = new Datadto();
+                dt = sqm.getCurrentUser(preferences.getString("id", "null"));
+                String info = workinginfo.getText().toString();
                 info = info + preferences2.getString("partInfo", "");
-                String sal=salary.getText().toString();
-                String not=notice.getText().toString();
-                int sala=Integer.parseInt(sal);
-                Datadao doli=new Datadao();
-                doli.setNotice(getApplicationContext(),dt.organ,info,sala, not); //저장. 조직 이름 넣으면, 해당 조직원들 모두, 데이터 업데이트
+                String sal = salary.getText().toString();
+                String not = notice.getText().toString();
+                int sala = Integer.parseInt(sal);
+                Datadao doli = new Datadao();
+                doli.setNotice(getApplicationContext(), dt.organ, info, sala, not); //저장. 조직 이름 넣으면, 해당 조직원들 모두, 데이터 업데이트
             }
         });
+
+        //bottom bar work
         fragmentManager = getSupportFragmentManager();
         bottomBar = new BottomBar();
         transaction = fragmentManager.beginTransaction();

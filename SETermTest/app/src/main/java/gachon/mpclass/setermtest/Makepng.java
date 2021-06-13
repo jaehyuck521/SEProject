@@ -8,6 +8,7 @@ import android.view.View;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 //
 public class Makepng {
     public Bitmap viewToBitmap(View view) {

@@ -89,6 +89,7 @@ public class InviteMembers extends AppCompatActivity {
                 }
             }
         });
+        // bottom bar work
         fragmentManager = getSupportFragmentManager();
         bottomBar = new BottomBar();
         transaction = fragmentManager.beginTransaction();

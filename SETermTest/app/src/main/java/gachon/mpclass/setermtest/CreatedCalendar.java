@@ -27,7 +27,7 @@ public class CreatedCalendar extends AppCompatActivity {
 
         except_and_push();
 
-
+        // Give bottom bar fragment
         fragmentManager = getSupportFragmentManager();
         bottomBar = new BottomBar();
         transaction = fragmentManager.beginTransaction();
@@ -35,14 +35,15 @@ public class CreatedCalendar extends AppCompatActivity {
 
     }
 
-    private String except_and_push(){
+    private String except_and_push() {
 
         Intent intent = getIntent(); /* Receive Data */
 
         SharedPreferences preferences;
         int part1_from_hour = intent.getExtras().getInt("part1_from_hour");
-        Log.i("db1","part1 "+part1_from_hour);
+        Log.i("db1", "part1 " + part1_from_hour);
 
+        // Task to get time value for each part-time
         int part1_to_hour = intent.getExtras().getInt("part1_to_hour");
         int part2_from_hour = intent.getExtras().getInt("part2_from_hour");
         int part2_to_hour = intent.getExtras().getInt("part2_to_hour");
@@ -50,32 +51,32 @@ public class CreatedCalendar extends AppCompatActivity {
         int part3_to_hour = intent.getExtras().getInt("part3_to_hour");
 
         SqliteManager sqm = new SqliteManager(getApplicationContext(), "kang.db");
-        ArrayList<Datadto> list=new ArrayList<Datadto>();
+        ArrayList<Datadto> list = new ArrayList<Datadto>();
         preferences = getSharedPreferences("id", MODE_PRIVATE);
         Datadto cur = new Datadto();
-        cur=sqm.getCurrentUser(preferences.getString("id", "null"));
-        Log.i("db1",cur.id);
+        cur = sqm.getCurrentUser(preferences.getString("id", "null"));
+        Log.i("db1", cur.id);
 
-        list=sqm.getList(cur.organ);
+        list = sqm.getList(cur.organ);
         Log.i("db1", list.get(1).id);
 
 
         String name[] = new String[list.size()];
-        int prefer[] = new int [list.size()];
-        int rest1[] = new int [list.size()];
-        int rest2[] = new int [list.size()];
-        int rest3[] = new int [list.size()];
+        int prefer[] = new int[list.size()];
+        int rest1[] = new int[list.size()];
+        int rest2[] = new int[list.size()];
+        int rest3[] = new int[list.size()];
 
-        for(int i=0;i<list.size();i++) {
+        for (int i = 0; i < list.size(); i++) {
             name[i] = list.get(i).name;
-            prefer[i] = (int)list.get(i).prefer;
-            rest1[i] = (int)list.get(i).rest1;
-            rest2[i] = (int)list.get(i).rest2;
+            prefer[i] = (int) list.get(i).prefer;
+            rest1[i] = (int) list.get(i).rest1;
+            rest2[i] = (int) list.get(i).rest2;
             rest3[i] = (int) list.get(i).rest3;
-            Log.i("db1",""+name[i]);
+            Log.i("db1", "" + name[i]);
         }
 
-//Get group data and make it an array
+        //Get group data and make it an array
 
         int rest[][] = new int[7][list.size()];
         int hours = (part1_to_hour - part1_from_hour) + (part2_to_hour - part2_from_hour) + (part3_to_hour - part3_from_hour); // 하루 총 몇시간 근무인지
@@ -83,14 +84,15 @@ public class CreatedCalendar extends AppCompatActivity {
 
         int[] time_split = new int[3];
 
+        // Store the number of hours from from to to
         time_split[0] = part1_to_hour - part1_from_hour;
         time_split[1] = part2_to_hour - part2_from_hour;
         time_split[2] = part3_to_hour - part3_from_hour;
         Log.i("db1", "time_split : " + time_split[0]);
 
 
-//rest array update (horizontal = day, vertical = group member)
-// --> 1 = day off, default value 0 = workable day
+        //rest array update (horizontal = day, vertical = group member)
+        // --> 1 = day off, default value 0 = workable day
         for (int i = 0; i < list.size(); i++) {
             switch (rest1[i]) {
                 case 7:
@@ -170,7 +172,7 @@ public class CreatedCalendar extends AppCompatActivity {
 
         }
 
-//Create a list of available people for each day of the week
+        //Create a list of available people for each day of the week
         ArrayList<String> sun = new ArrayList<>();
         ArrayList<String> mon = new ArrayList<>();
         ArrayList<String> tue = new ArrayList<>();
@@ -203,7 +205,7 @@ public class CreatedCalendar extends AppCompatActivity {
             }
         }
 
-//Pick 3 people
+        //Pick 3 people
         sun = (ArrayList<String>) getRandomElement(sun);
         mon = (ArrayList<String>) getRandomElement(mon);
         tue = (ArrayList<String>) getRandomElement(tue);

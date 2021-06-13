@@ -29,10 +29,12 @@ public class MyPage extends AppCompatActivity {
         preferences = getSharedPreferences("id", MODE_PRIVATE);
         setid=(TextView) findViewById(R.id.text_user_name);
         setphone=(TextView) findViewById(R.id.text_phone);
+
         //call the sqlite manager for use of sqlite
         SqliteManager sqm=new SqliteManager(getApplicationContext(),"kang.db");
         Datadto dt=new Datadto(); //set the dto inserting information
         dt=sqm.getCurrentUser(preferences.getString("id", "null"));
+
         //get the current user information
         setid.setText(dt.name); //set the ui from current user information
         setphone.setText(dt.phonenum);
@@ -44,6 +46,8 @@ public class MyPage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //for account deletion
         btn_delete_account = findViewById(R.id.btn_delete_account);
         btn_delete_account.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +57,7 @@ public class MyPage extends AppCompatActivity {
             }
         });
 
+        //bottom bar work
         fragmentManager = getSupportFragmentManager();
         bottomBar = new BottomBar();
         transaction = fragmentManager.beginTransaction();

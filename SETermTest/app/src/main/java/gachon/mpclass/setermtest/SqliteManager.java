@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+
 //for class saving the database from server database
 public class SqliteManager {
     SQLiteDatabase database;

@@ -2,6 +2,7 @@ package gachon.mpclass.setermtest;
 
 //data dto object  for accessing server database
 public class Datadto {
+
     //variables
     public String id;
     public String password;
@@ -22,44 +23,43 @@ public class Datadto {
     public long prefer;
     //data dto constructor
 
-    public Datadto(String id, String password,String name, long lead, long isStu,  String org, long orgnum, String phone,String gleader,String dis, String info, long salary, String notice,long rest1, long rest2, long rest3, long prefer)
-    {
-        this.id=id;
-        this.password=password;
-        this.name=name;
-        this.leader=lead;
-        this.isStudent=isStu;
-        this.organ=org;
-        this.organnum=orgnum;
-        this.phonenum=phone;
-        this.groupLeadname=gleader;
-        this.g_info=info;
-        this.salary=salary;
-        this.groupNotice=notice;
-        this.discription=dis;
-        this.rest1=rest1;
-        this.rest2=rest2;
-        this.rest3=rest3;
-        this.prefer=prefer;
+    public Datadto(String id, String password, String name, long lead, long isStu, String org, long orgnum, String phone, String gleader, String dis, String info, long salary, String notice, long rest1, long rest2, long rest3, long prefer) {
+        this.id = id;
+        this.password = password;
+        this.name = name;
+        this.leader = lead;
+        this.isStudent = isStu;
+        this.organ = org;
+        this.organnum = orgnum;
+        this.phonenum = phone;
+        this.groupLeadname = gleader;
+        this.g_info = info;
+        this.salary = salary;
+        this.groupNotice = notice;
+        this.discription = dis;
+        this.rest1 = rest1;
+        this.rest2 = rest2;
+        this.rest3 = rest3;
+        this.prefer = prefer;
     }
-    public Datadto()
-    {
+
+    public Datadto() {
     }
+
     //setter & getter method
-    public String getId()
-    {
+    public String getId() {
         return id;
     }
-    public String getPassword()
-    {
+
+    public String getPassword() {
         return password;
     }
-    public String getName()
-    {
+
+    public String getName() {
         return name;
     }
-    public String getOrgan()
-    {
+
+    public String getOrgan() {
         return organ;
     }
 
@@ -103,16 +103,17 @@ public class Datadto {
         return discription;
     }
 
-    public String getPhonenum()
-    {
+    public String getPhonenum() {
         return phonenum;
     }
 
-    public long getIsStudent()
-    {
+    public long getIsStudent() {
         return isStudent;
     }
-    public long getLeader() { return leader; }
+
+    public long getLeader() {
+        return leader;
+    }
 
     public void setName(String name) {
         this.name = name;
